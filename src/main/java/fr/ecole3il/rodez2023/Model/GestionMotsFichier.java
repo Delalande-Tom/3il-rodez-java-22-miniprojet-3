@@ -1,48 +1,44 @@
 package fr.ecole3il.rodez2023.Model;
 
+import fr.ecole3il.rodez2023.Model.Mot;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class GestionMotsFichier implements GestionMotsInterface{
+public class GestionMotsFichier implements GestionMotsInterface {
+    private String fichierMots;
 
-    private List<Mot> mots;
-
-    public GestionMotsFichier() {
-        this.mots = new ArrayList<>();
+    /**
+     * Constructeur
+     * @param fichierMots le fichier contenant les mots
+     */
+    public GestionMotsFichier(String fichierMots) {
+        this.fichierMots = fichierMots;
     }
 
     /**
      * Charge les mots depuis un fichier
-     * @param cheminFichier le chemin du fichier
-     * @return
+     * @return la liste des mots
      */
     @Override
-    public void chargerMots(String cheminFichier) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(cheminFichier))) {
-            String ligne;
-            while ((ligne = reader.readLine()) != null) {
-                String[] elements = ligne.split(" ", 2); // séparer le mot et sa définition
-                if (elements.length == 2) {
-                    mots.add(new Mot(elements[0], elements[1]));
+    public List<Mot> chargerMots() {
+        List<Mot> mots = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(fichierMots))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(" ", 2);
+                if (parts.length >= 2) {
+                    String mot = parts[0];
+                    String definition = parts[1];
+                    mots.add(new Mot(mot, definition));
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Renvoie un mot aléatoire
-     * @return le mot
-     */
-    @Override
-    public Mot choisirMotAleatoire() {
-        Random random = new Random();
-        int index = random.nextInt(mots.size());
-        return mots.get(index);
+        return mots;
     }
 }

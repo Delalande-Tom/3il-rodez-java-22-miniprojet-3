@@ -6,7 +6,7 @@ public class FabriqueChargeurMot {
      * Renvoie un chargeur de mots
      * @return un chargeur de mots
      */
-    public static GestionMotsInterface getChargeurMot() {
-            return new GestionMotsFichier();
+    public static GestionMotsInterface getChargeurMot(String cheminFichier) {
+            return new GestionMotsFichier(cheminFichier);
         }
 }
