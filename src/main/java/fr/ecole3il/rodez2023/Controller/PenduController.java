@@ -14,6 +14,8 @@ public class PenduController {
     private Mot motADeviner;
     private String lettresProposees;
 
+    private int tentatives = 10;
+
     public PenduController(GestionMotsInterface gestionMots) {
         this.gestionMots = gestionMots;
         this.lettresProposees = "";
@@ -82,6 +84,8 @@ public class PenduController {
                 ui.gagner(motADeviner.getMot());
             }
         } else {
+            tentatives--;
+            ui.decrementerTentatives();
             //@TODO perdre le pendu
         }
     }

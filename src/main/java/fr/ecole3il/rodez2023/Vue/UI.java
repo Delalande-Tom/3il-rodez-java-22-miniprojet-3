@@ -16,27 +16,42 @@ public class UI extends JFrame {
     private JLabel lettresProposeesLabel;
     private JLabel penduLabel;
     private JLabel resultatLabel;
+    private JLabel tentativesLabel;
+
+    private JLabel tentatives;
+
+    private JLabel penduImage;
 
     private PenduController controller;
 
     public UI() {
         setTitle("Jeu du Pendu");
-        setSize(400, 300);
+        setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(6, 1));
+        setLayout(new GridLayout(8, 1));
 
         definitionLabel = new JLabel("Définition du mot à deviner : ");
+        JPanel panelTentative = new JPanel();
+        penduImage = new JLabel(new ImageIcon(new ImageIcon("Pendu1.png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
+        //Construction des tentatives
+        tentativesLabel = new JLabel("Nombre de tentatives restantes :");
+        tentatives = new JLabel("10");
+        panelTentative.add(tentativesLabel);
+        panelTentative.add(tentatives);
+
         lettreField = new JTextField(10);
-        proposerButton = new JButton("Proposer");
-        rejouerButton = new JButton("Rejouer");
         lettresProposeesLabel = new JLabel("Lettres déjà proposées : ");
         penduLabel = new JLabel("Pendu : ");
         resultatLabel = new JLabel();
+        proposerButton = new JButton("Proposer");
+        rejouerButton = new JButton("Rejouer");
 
         add(definitionLabel);
+        add(penduImage, BorderLayout.CENTER);
         add(lettreField);
         add(lettresProposeesLabel);
         add(penduLabel);
+        add(panelTentative);
         add(resultatLabel);
         add(proposerButton);
 
@@ -58,6 +73,7 @@ public class UI extends JFrame {
                 add(proposerButton);
                 resultatLabel.setText("");
                 lettresProposeesLabel.setText("Lettres déjà proposées : ");
+                tentatives.setText("10");
 
             }
         });
@@ -96,5 +112,25 @@ public class UI extends JFrame {
         remove(proposerButton);
         add(rejouerButton);
 
+    }
+
+    public void perdre(String motADeviner) {
+        this.afficherMessage("Désolé, vous avez perdu. Le mot à deviner était : " + motADeviner);
+        remove(proposerButton);
+        add(rejouerButton);
+    }
+
+    public void decrementerTentatives() {
+        int nbTentatives = Integer.parseInt(tentatives.getText());
+        nbTentatives--;
+        tentatives.setText(String.valueOf(nbTentatives));
+
+    }
+
+    public void mettreAJourImagePendu(int tentativesRestantes) {
+        // Générez le chemin de l'image en fonction du nombre de tentatives restantes
+        String cheminImage = "ressources/" + tentativesRestantes + ".png";
+        // Chargez l'image correspondante et mettez à jour le JLabel
+        penduLabel.setIcon(new ImageIcon(cheminImage));
     }
 }
