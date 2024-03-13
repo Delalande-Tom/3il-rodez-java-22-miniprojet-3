@@ -14,6 +14,8 @@ public class UIPenduJeu extends JFrame {
     private JButton proposerButton;
     private JButton rejouerButton;
     private JLabel lettresProposeesLabel;
+    private JLabel lettresProposees;
+    private JPanel panelLettresProposees;
     private JLabel penduLabel;
     private JLabel resultatLabel;
     private JLabel tentativesLabel;
@@ -32,10 +34,10 @@ public class UIPenduJeu extends JFrame {
         setLayout(new GridLayout(8, 1));
 
         definitionLabel = new JLabel("Définition du mot à deviner : ");
-        JPanel panelTentative = new JPanel();
         penduImage = new JLabel();
         penduImage.setHorizontalAlignment(SwingConstants.CENTER);
         //Construction des tentatives
+        JPanel panelTentative = new JPanel();
         tentativesLabel = new JLabel("Nombre de tentatives restantes :");
         tentatives = new JLabel(String.valueOf(controller.getTentatives()));
         panelTentative.add(tentativesLabel);
@@ -44,7 +46,13 @@ public class UIPenduJeu extends JFrame {
         propositionLettre = new JTextField(1);
         propositionLettre.setDocument(new LimitJTextField(1));
         propositionLettre.setHorizontalAlignment(SwingConstants.CENTER);
+        // Construction des lettres déja proposé
+        panelLettresProposees = new JPanel();
         lettresProposeesLabel = new JLabel("Lettres déjà proposées : ");
+        lettresProposees = new JLabel();
+        panelLettresProposees.add(lettresProposeesLabel);
+        panelLettresProposees.add(lettresProposees);
+
         penduLabel = new JLabel("Pendu : ");
         resultatLabel = new JLabel();
         proposerButton = new JButton("Proposer");
@@ -53,7 +61,7 @@ public class UIPenduJeu extends JFrame {
         add(definitionLabel);
         add(penduImage, BorderLayout.CENTER);
         add(propositionLettre);
-        add(lettresProposeesLabel);
+        add(panelLettresProposees);
         add(penduLabel);
         add(panelTentative);
         add(resultatLabel);
@@ -94,10 +102,11 @@ public class UIPenduJeu extends JFrame {
             penduVide += "__ ";
         }
         penduLabel.setText("Pendu : " + penduVide);
+        lettresProposees.setText("");
     }
 
     public void setLettresProposees(String lettres) {
-        lettresProposeesLabel.setText("Lettres déjà proposées : " + lettres);
+        lettresProposees.setText(lettres);
     }
 
     public void setPenduRempli(String penduRempli) {
