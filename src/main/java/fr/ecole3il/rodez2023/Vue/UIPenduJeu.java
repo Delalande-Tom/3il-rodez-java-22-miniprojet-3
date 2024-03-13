@@ -32,7 +32,7 @@ public class UIPenduJeu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(8, 1));
 
-        definitionLabel = new JLabel("Définition du mot à deviner : ");
+        definitionLabel = new JLabel();
         penduImage = new JLabel();
         penduImage.setHorizontalAlignment(SwingConstants.CENTER);
         //Construction des tentatives
@@ -117,10 +117,11 @@ public class UIPenduJeu extends JFrame {
     /**
      * Initialiser le jeu du pendu
      * @param motADeviner le mot à deviner
+     * @param definition si vrai affiche la définition
      */
-    public void initialiserMotADeviner(Mot motADeviner) {
+    public void initialiserMotADeviner(Mot motADeviner, boolean definition) {
         penduImage.setIcon(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+controller.getTentatives()+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
-        definitionLabel.setText("définition du Mot à deviner : " + motADeviner.getDefinition());
+        if (definition) definitionLabel.setText("définition du Mot à deviner : " + motADeviner.getDefinition());
         // Initialiser le pendu
         StringBuilder penduVide = new StringBuilder();
         penduVide.append("__ ".repeat(motADeviner.getMot().length()));

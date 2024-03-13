@@ -39,7 +39,7 @@ public class PenduController {
     public void initialiserPartie() {
         List<Mot> mots = gestionMots.chargerMots();
         motADeviner = choisirMotAleatoire(mots);
-        uiPenduJeu.initialiserMotADeviner(motADeviner);
+        uiPenduJeu.initialiserMotADeviner(motADeviner,this.difficulty==0);
     }
 
     /**
