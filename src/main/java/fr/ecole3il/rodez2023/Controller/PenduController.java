@@ -77,15 +77,15 @@ public class PenduController {
         uiPenduJeu.afficherMessage("");
 
         // Mettre à jour la représentation du pendu avec les lettres correctes
-        String penduRempli = "";
+        StringBuilder penduRempli = new StringBuilder();
         for (char lettre : motADeviner.getMot().toCharArray()) {
             if (lettresProposees.contains(String.valueOf(lettre))) {
-                penduRempli += lettre + " ";
+                penduRempli.append(lettre).append(" ");
             } else {
-                penduRempli += "__ ";
+                penduRempli.append("__ ");
             }
         }
-        uiPenduJeu.setPenduRempli(penduRempli);
+        uiPenduJeu.setPenduRempli(penduRempli.toString());
 
         if (motADeviner.contientLettre(lettreProposee)) {
             if (motADeviner.estEntierementTrouve(lettresProposees)) {
