@@ -16,7 +16,10 @@ public class PenduController {
 
     private int tentatives;
 
+    private int difficulty;
+
     public PenduController(GestionMotsInterface gestionMots, int difficulty) {
+        this.difficulty = difficulty;
         this.gestionMots = gestionMots;
         this.lettresProposees = "";
         this.setTentatives(difficulty);
@@ -40,6 +43,7 @@ public class PenduController {
     }
 
     public void recommencerPartie() {
+        setTentatives(this.difficulty);
         lettresProposees = "";
         initialiserPartie();
     }
@@ -87,12 +91,13 @@ public class PenduController {
         } else {
             tentatives--;
             uiPenduJeu.decrementerTentatives();
-            //@TODO perdre le pendu
+            uiPenduJeu.mettreAJourImagePendu(tentatives);
+            if (tentatives == 0) uiPenduJeu.perdre(motADeviner.getMot());
         }
     }
 
     private void setTentatives(int difficulty) {
-        this.tentatives = 10;
+        this.tentatives = 11 - difficulty;
     }
 
     public int getTentatives() {

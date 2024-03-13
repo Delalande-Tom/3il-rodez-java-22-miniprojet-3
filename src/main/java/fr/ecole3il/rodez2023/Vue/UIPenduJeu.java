@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class UIPenduJeu extends JFrame {
     private JLabel definitionLabel;
-    private JTextField lettreField;
+    private JTextField propositionLettre;
     private JButton proposerButton;
     private JButton rejouerButton;
     private JLabel lettresProposeesLabel;
@@ -33,14 +33,17 @@ public class UIPenduJeu extends JFrame {
 
         definitionLabel = new JLabel("Définition du mot à deviner : ");
         JPanel panelTentative = new JPanel();
-        penduImage = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+controller.getTentatives()+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
+        penduImage = new JLabel();
+        penduImage.setHorizontalAlignment(SwingConstants.CENTER);
         //Construction des tentatives
         tentativesLabel = new JLabel("Nombre de tentatives restantes :");
         tentatives = new JLabel(String.valueOf(controller.getTentatives()));
         panelTentative.add(tentativesLabel);
         panelTentative.add(tentatives);
 
-        lettreField = new JTextField(1);
+        propositionLettre = new JTextField(1);
+        propositionLettre.setDocument(new LimitJTextField(1));
+        propositionLettre.setHorizontalAlignment(SwingConstants.CENTER);
         lettresProposeesLabel = new JLabel("Lettres déjà proposées : ");
         penduLabel = new JLabel("Pendu : ");
         resultatLabel = new JLabel();
@@ -49,7 +52,7 @@ public class UIPenduJeu extends JFrame {
 
         add(definitionLabel);
         add(penduImage, BorderLayout.CENTER);
-        add(lettreField);
+        add(propositionLettre);
         add(lettresProposeesLabel);
         add(penduLabel);
         add(panelTentative);
@@ -59,9 +62,9 @@ public class UIPenduJeu extends JFrame {
         proposerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String lettreProposee = lettreField.getText().trim();
+                String lettreProposee = propositionLettre.getText().trim();
                 controller.proposerLettre(lettreProposee);
-                lettreField.setText(""); // Effacer le champ après chaque proposition
+                propositionLettre.setText(""); // Effacer le champ après chaque proposition
             }
         });
 
@@ -83,6 +86,7 @@ public class UIPenduJeu extends JFrame {
     }
 
     public void initialiserMotADeviner(Mot motADeviner) {
+        penduImage.setIcon(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+controller.getTentatives()+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
         definitionLabel.setText("définition du Mot à deviner : " + motADeviner.getDefinition());
         // Initialiser le pendu
         String penduVide = "";
@@ -125,9 +129,8 @@ public class UIPenduJeu extends JFrame {
     }
 
     public void mettreAJourImagePendu(int tentativesRestantes) {
-        // Générez le chemin de l'image en fonction du nombre de tentatives restantes
-        String cheminImage = "src/main/resources/img/Pendu"+tentatives+".png";
+        String cheminImage = "src/main/resources/img/Pendu"+tentativesRestantes+".png";
         // Chargez l'image correspondante et mettez à jour le JLabel
-        penduLabel.setIcon(new ImageIcon(cheminImage));
+        penduImage.setIcon(new ImageIcon(new ImageIcon(cheminImage).getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
     }
 }
