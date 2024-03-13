@@ -39,7 +39,7 @@ public class PenduController {
     public void initialiserPartie() {
         List<Mot> mots = gestionMots.chargerMots();
         motADeviner = choisirMotAleatoire(mots);
-        uiPenduJeu.initialiserMotADeviner(motADeviner,this.difficulty==0);
+        uiPenduJeu.initialiserInterfaceJeu(motADeviner,this.difficulty==0,this.difficulty>=2);
     }
 
     /**
@@ -113,5 +113,9 @@ public class PenduController {
      */
     public int getTentatives() {
         return tentatives;
+    }
+
+    public int getDifficulty() {
+        return difficulty;
     }
 }

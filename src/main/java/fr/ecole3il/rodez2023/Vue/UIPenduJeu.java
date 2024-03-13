@@ -23,6 +23,11 @@ public class UIPenduJeu extends JFrame {
 
     private final JPanel panelBoutton;
 
+    private Timer timer;
+    private int timeLeft;
+
+    private final JPanel timerPanel;
+
     private final PenduController controller;
 
     public UIPenduJeu(PenduController controller) {
@@ -30,7 +35,9 @@ public class UIPenduJeu extends JFrame {
         setTitle("Jeu du Pendu");
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new GridLayout(8, 1));
+        setLayout(new GridLayout(9, 1));
+
+        timerPanel = new JPanel();
 
         definitionLabel = new JLabel();
         penduImage = new JLabel();
@@ -52,7 +59,7 @@ public class UIPenduJeu extends JFrame {
         panelLettresProposees.add(lettresProposeesLabel);
         panelLettresProposees.add(lettresProposees);
 
-        penduLabel = new JLabel("");
+        penduLabel = new JLabel();
         penduLabel.setHorizontalAlignment(SwingConstants.CENTER);
         resultatLabel = new JLabel();
         //Construction panel Boutton
@@ -62,6 +69,7 @@ public class UIPenduJeu extends JFrame {
         panelBoutton.add(proposerButton);
         panelBoutton.add(accueilButton);
         rejouerButton = new JButton("Rejouer");
+
 
         add(definitionLabel);
         add(penduImage, BorderLayout.CENTER);
@@ -119,13 +127,31 @@ public class UIPenduJeu extends JFrame {
      * @param motADeviner le mot à deviner
      * @param definition si vrai affiche la définition
      */
-    public void initialiserMotADeviner(Mot motADeviner, boolean definition) {
+    public void initialiserInterfaceJeu(Mot motADeviner, boolean definition, boolean timerBoolean) {
         penduImage.setIcon(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+controller.getTentatives()+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
         if (definition) definitionLabel.setText("définition du Mot à deviner : " + motADeviner.getDefinition());
-        // Initialiser le pendu
-        StringBuilder penduVide = new StringBuilder();
-        penduVide.append("__ ".repeat(motADeviner.getMot().length()));
-        penduLabel.setText(penduVide.toString());
+        if (timerBoolean) {
+            add(timerPanel);
+            timeLeft = 300 / controller.getDifficulty();
+            timer = new Timer(1000, new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    updateTimerDisplay(timer.getDelay());
+                    if (controller.getTentatives() == 0) {
+                        timer.stop();
+                    }
+                    if(timeLeft == 0){
+                        perdre(motADeviner.getMot());
+                    }
+                    updateTimerDisplay(timeLeft--);
+                }
+            });
+            timer.start();
+
+        }
+        // Initialiser le mot du pendu
+        penduLabel.setText("__ ".repeat(motADeviner.getMot().length()));
         lettresProposees.setText("");
     }
 
@@ -179,6 +205,7 @@ public class UIPenduJeu extends JFrame {
      */
     public void perdre(String motADeviner) {
         this.afficherMessage("Désolé, vous avez perdu. Le mot à deviner était : " + motADeviner);
+        timer.stop();
         afficherBoutonRejouer();
     }
 
@@ -200,5 +227,13 @@ public class UIPenduJeu extends JFrame {
         String cheminImage = "src/main/resources/img/Pendu"+tentativesRestantes+".png";
         // Chargez l'image correspondante et mettez à jour le JLabel
         penduImage.setIcon(new ImageIcon(new ImageIcon(cheminImage).getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
+    }
+
+    public void updateTimerDisplay(int time) {
+        timerPanel.removeAll();
+        JLabel timerLabel = new JLabel("Temps restant : " + time);
+        timerPanel.add(timerLabel);
+        timerPanel.revalidate();
+        timerPanel.repaint();
     }
 }
