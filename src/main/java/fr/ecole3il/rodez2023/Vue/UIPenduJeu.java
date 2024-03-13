@@ -122,11 +122,9 @@ public class UIPenduJeu extends JFrame {
         penduImage.setIcon(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+controller.getTentatives()+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
         definitionLabel.setText("définition du Mot à deviner : " + motADeviner.getDefinition());
         // Initialiser le pendu
-        String penduVide = "";
-        for (int i = 0; i < motADeviner.getMot().length(); i++) {
-            penduVide += "__ ";
-        }
-        penduLabel.setText(penduVide);
+        StringBuilder penduVide = new StringBuilder();
+        penduVide.append("__ ".repeat(motADeviner.getMot().length()));
+        penduLabel.setText(penduVide.toString());
         lettresProposees.setText("");
     }
 
