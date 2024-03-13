@@ -46,12 +46,11 @@ public class UiMain extends JFrame{
     }
 
     private void launchGame(int difficulty) {
-        GestionMotsInterface gestionMots = FabriqueChargeurMot.getChargeurMot("mots.txt");
-        PenduController controller = new PenduController(gestionMots);
-        UIPenduJeu uiPenduJeu = new UIPenduJeu(difficulty);
+        GestionMotsInterface gestionMots = FabriqueChargeurMot.getChargeurMot("src/main/java/fr/ecole3il/rodez2023/Model/mots.txt");
+        PenduController controller = new PenduController(gestionMots,difficulty);
+        UIPenduJeu uiPenduJeu = new UIPenduJeu(controller);
 
         controller.setUI(uiPenduJeu);
-        uiPenduJeu.setController(controller);
 
         // Initialiser la partie
         controller.initialiserPartie();

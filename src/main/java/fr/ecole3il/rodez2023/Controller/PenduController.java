@@ -2,7 +2,7 @@ package fr.ecole3il.rodez2023.Controller;
 
 import fr.ecole3il.rodez2023.Model.GestionMotsInterface;
 import fr.ecole3il.rodez2023.Model.Mot;
-import fr.ecole3il.rodez2023.Vue.UI;
+import fr.ecole3il.rodez2023.Vue.UIPenduJeu;
 
 import java.util.List;
 import java.util.Locale;
@@ -10,23 +10,24 @@ import java.util.Random;
 
 public class PenduController {
     private GestionMotsInterface gestionMots;
-    private UI ui;
+    private UIPenduJeu uiPenduJeu;
     private Mot motADeviner;
     private String lettresProposees;
 
-    private int tentatives = 10;
+    private int tentatives;
 
-    public PenduController(GestionMotsInterface gestionMots) {
+    public PenduController(GestionMotsInterface gestionMots, int difficulty) {
         this.gestionMots = gestionMots;
         this.lettresProposees = "";
+        this.setTentatives(difficulty);
     }
 
     /**
      * Setter pour l'interface utilisateur
-     * @param ui l'interface utilisateur
+     * @param uiPenduJeu l'interface utilisateur
      */
-    public void setUI(UI ui) {
-        this.ui = ui;
+    public void setUI(UIPenduJeu uiPenduJeu) {
+        this.uiPenduJeu = uiPenduJeu;
     }
 
     /**
@@ -35,7 +36,7 @@ public class PenduController {
     public void initialiserPartie() {
         List<Mot> mots = gestionMots.chargerMots();
         motADeviner = choisirMotAleatoire(mots);
-        ui.initialiserMotADeviner(motADeviner);
+        uiPenduJeu.initialiserMotADeviner(motADeviner);
     }
 
     public void recommencerPartie() {
@@ -60,13 +61,13 @@ public class PenduController {
     public void proposerLettre(String lettreProposee) {
         // Vérifier si la lettre a déjà été proposée
         if (lettresProposees.contains(lettreProposee)) {
-            ui.afficherMessage("La lettre '" + lettreProposee + "' a déjà été proposée. Veuillez choisir une autre lettre.");
+            uiPenduJeu.afficherMessage("La lettre '" + lettreProposee + "' a déjà été proposée. Veuillez choisir une autre lettre.");
             return; // Sortir de la méthode si la lettre a déjà été proposée
         }
 
         lettresProposees += lettreProposee.toLowerCase(Locale.ROOT)+" ";
-        ui.setLettresProposees(lettresProposees);
-        ui.afficherMessage("");
+        uiPenduJeu.setLettresProposees(lettresProposees);
+        uiPenduJeu.afficherMessage("");
 
         // Mettre à jour la représentation du pendu avec les lettres correctes
         String penduRempli = "";
@@ -77,17 +78,24 @@ public class PenduController {
                 penduRempli += "__ ";
             }
         }
-        ui.setPenduRempli(penduRempli);
+        uiPenduJeu.setPenduRempli(penduRempli);
 
         if (motADeviner.contientLettre(lettreProposee)) {
             if (motADeviner.estEntierementTrouve(lettresProposees)) {
-                ui.gagner(motADeviner.getMot());
+                uiPenduJeu.gagner(motADeviner.getMot());
             }
         } else {
             tentatives--;
-            ui.decrementerTentatives();
+            uiPenduJeu.decrementerTentatives();
             //@TODO perdre le pendu
         }
     }
 
+    private void setTentatives(int difficulty) {
+        this.tentatives = 10;
+    }
+
+    public int getTentatives() {
+        return tentatives;
+    }
 }

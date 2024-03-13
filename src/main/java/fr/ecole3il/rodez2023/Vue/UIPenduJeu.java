@@ -24,22 +24,23 @@ public class UIPenduJeu extends JFrame {
 
     private PenduController controller;
 
-    public UIPenduJeu(int difficulty) {
+    public UIPenduJeu(PenduController controller) {
+        this.controller = controller;
         setTitle("Jeu du Pendu");
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(8, 1));
-        tentatives = new JLabel("10");
+
         definitionLabel = new JLabel("Définition du mot à deviner : ");
         JPanel panelTentative = new JPanel();
-        penduImage = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+tentatives+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
+        penduImage = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+controller.getTentatives()+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
         //Construction des tentatives
         tentativesLabel = new JLabel("Nombre de tentatives restantes :");
-
+        tentatives = new JLabel(String.valueOf(controller.getTentatives()));
         panelTentative.add(tentativesLabel);
         panelTentative.add(tentatives);
 
-        lettreField = new JTextField(10);
+        lettreField = new JTextField(1);
         lettresProposeesLabel = new JLabel("Lettres déjà proposées : ");
         penduLabel = new JLabel("Pendu : ");
         resultatLabel = new JLabel();
@@ -79,10 +80,6 @@ public class UIPenduJeu extends JFrame {
         });
 
         setVisible(true);
-    }
-
-    public void setController(PenduController controller) {
-        this.controller = controller;
     }
 
     public void initialiserMotADeviner(Mot motADeviner) {
