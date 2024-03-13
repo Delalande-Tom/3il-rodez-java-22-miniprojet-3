@@ -104,7 +104,7 @@ public class PenduController {
      * @param difficulty la difficulté
      */
     private void setTentatives(int difficulty) {
-        this.tentatives = 11 - difficulty;
+        this.tentatives = 10 - difficulty;
     }
 
     /**

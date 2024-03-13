@@ -22,7 +22,7 @@ public class LimitJTextField  extends PlainDocument {
     public void insertString(int offset, String text, AttributeSet attr) throws BadLocationException {
         if (text == null)
             return;
-        if ((getLength() + text.length()) <= max) {
+        if ((getLength() + text.length()) <= max && text.matches("[a-zA-Zéè-]+")) {
             super.insertString(offset, text, attr);
         }
     }
