@@ -4,6 +4,6 @@ import fr.ecole3il.rodez2023.Vue.UiMain;
 
 class Launcher {
     public static void main(String[] args) {
-        new UiMain();
+        UiMain.getInstance();
     }
 }

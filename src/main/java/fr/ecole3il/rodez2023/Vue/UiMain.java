@@ -13,7 +13,10 @@ public class UiMain extends JFrame{
     private JButton startButton;
     private JComboBox<String> difficultyComboBox;
 
-    public UiMain() {
+    private static UiMain instance;
+
+
+    private UiMain() {
         setTitle("Pendu - Choix de difficulté");
         setSize(300, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,6 +61,13 @@ public class UiMain extends JFrame{
 
         // Initialiser la partie
         controller.initialiserPartie();
+    }
+
+    public static UiMain getInstance() {
+        if (instance == null) {
+            instance = new UiMain();
+        }
+        return instance;
     }
 
 }
