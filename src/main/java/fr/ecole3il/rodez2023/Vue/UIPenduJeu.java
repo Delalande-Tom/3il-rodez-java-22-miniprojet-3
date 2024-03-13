@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UI extends JFrame {
+public class UIPenduJeu extends JFrame {
     private JLabel definitionLabel;
     private JTextField lettreField;
     private JButton proposerButton;
@@ -24,18 +24,18 @@ public class UI extends JFrame {
 
     private PenduController controller;
 
-    public UI() {
+    public UIPenduJeu(int difficulty) {
         setTitle("Jeu du Pendu");
         setSize(800, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new GridLayout(8, 1));
-
+        tentatives = new JLabel("10");
         definitionLabel = new JLabel("Définition du mot à deviner : ");
         JPanel panelTentative = new JPanel();
-        penduImage = new JLabel(new ImageIcon(new ImageIcon("Pendu1.png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
+        penduImage = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+tentatives+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
         //Construction des tentatives
         tentativesLabel = new JLabel("Nombre de tentatives restantes :");
-        tentatives = new JLabel("10");
+
         panelTentative.add(tentativesLabel);
         panelTentative.add(tentatives);
 
@@ -129,7 +129,7 @@ public class UI extends JFrame {
 
     public void mettreAJourImagePendu(int tentativesRestantes) {
         // Générez le chemin de l'image en fonction du nombre de tentatives restantes
-        String cheminImage = "ressources/" + tentativesRestantes + ".png";
+        String cheminImage = "src/main/resources/img/Pendu"+tentatives+".png";
         // Chargez l'image correspondante et mettez à jour le JLabel
         penduLabel.setIcon(new ImageIcon(cheminImage));
     }
