@@ -42,6 +42,9 @@ public class PenduController {
         uiPenduJeu.initialiserMotADeviner(motADeviner);
     }
 
+    /**
+     * Recommencer une partie
+     */
     public void recommencerPartie() {
         setTentatives(this.difficulty);
         lettresProposees = "";
@@ -96,10 +99,18 @@ public class PenduController {
         }
     }
 
+    /**
+     * Setter pour le nombre de tentatives
+     * @param difficulty la difficulté
+     */
     private void setTentatives(int difficulty) {
         this.tentatives = 11 - difficulty;
     }
 
+    /**
+     * Getter pour le nombre de tentatives
+     * @return le nombre de tentatives
+     */
     public int getTentatives() {
         return tentatives;
     }

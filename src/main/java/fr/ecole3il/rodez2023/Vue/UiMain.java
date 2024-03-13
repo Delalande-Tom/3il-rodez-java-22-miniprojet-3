@@ -45,6 +45,10 @@ public class UiMain extends JFrame{
         setVisible(true);
     }
 
+    /**
+     * Lancer le jeu du pendu
+     * @param difficulty la difficulté
+     */
     private void launchGame(int difficulty) {
         GestionMotsInterface gestionMots = FabriqueChargeurMot.getChargeurMot("src/main/java/fr/ecole3il/rodez2023/Model/mots.txt");
         PenduController controller = new PenduController(gestionMots,difficulty);

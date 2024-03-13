@@ -94,6 +94,10 @@ public class UIPenduJeu extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Initialiser le jeu du pendu
+     * @param motADeviner le mot à deviner
+     */
     public void initialiserMotADeviner(Mot motADeviner) {
         penduImage.setIcon(new ImageIcon(new ImageIcon("src/main/resources/img/Pendu"+controller.getTentatives()+".png").getImage().getScaledInstance(100,100,Image.SCALE_SMOOTH)));
         definitionLabel.setText("définition du Mot à deviner : " + motADeviner.getDefinition());
@@ -106,18 +110,34 @@ public class UIPenduJeu extends JFrame {
         lettresProposees.setText("");
     }
 
+    /**
+     * Mettre à jour les lettres proposées
+     * @param lettres les lettres proposées
+     */
     public void setLettresProposees(String lettres) {
         lettresProposees.setText(lettres);
     }
 
+    /**
+     * Mettre à jour le pendu
+     * @param penduRempli le pendu rempli
+     */
     public void setPenduRempli(String penduRempli) {
         penduLabel.setText(penduRempli);
     }
 
+    /**
+     * Afficher un message
+     * @param message le message à afficher
+     */
     public void afficherMessage(String message) {
         resultatLabel.setText(message);
     }
 
+    /**
+     * Afficher un message de victoire
+     * @param motADeviner le mot à deviner
+     */
     public void gagner(String motADeviner) {
         this.afficherMessage("Félicitations, vous avez trouvé le mot : " + motADeviner);
         remove(proposerButton);
@@ -125,12 +145,19 @@ public class UIPenduJeu extends JFrame {
 
     }
 
+    /**
+     * Afficher un message de défaite
+     * @param motADeviner le mot à deviner
+     */
     public void perdre(String motADeviner) {
         this.afficherMessage("Désolé, vous avez perdu. Le mot à deviner était : " + motADeviner);
         remove(proposerButton);
         add(rejouerButton);
     }
 
+    /**
+     * Décrémenter le nombre de tentatives
+     */
     public void decrementerTentatives() {
         int nbTentatives = Integer.parseInt(tentatives.getText());
         nbTentatives--;
@@ -138,6 +165,10 @@ public class UIPenduJeu extends JFrame {
 
     }
 
+    /**
+     * Mettre à jour l'image du pendu
+     * @param tentativesRestantes le nombre de tentatives restantes
+     */
     public void mettreAJourImagePendu(int tentativesRestantes) {
         String cheminImage = "src/main/resources/img/Pendu"+tentativesRestantes+".png";
         // Chargez l'image correspondante et mettez à jour le JLabel
