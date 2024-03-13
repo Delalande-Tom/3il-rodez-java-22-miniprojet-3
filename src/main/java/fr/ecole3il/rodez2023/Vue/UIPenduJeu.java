@@ -53,7 +53,8 @@ public class UIPenduJeu extends JFrame {
         panelLettresProposees.add(lettresProposeesLabel);
         panelLettresProposees.add(lettresProposees);
 
-        penduLabel = new JLabel("Pendu : ");
+        penduLabel = new JLabel("");
+        penduLabel.setHorizontalAlignment(SwingConstants.CENTER);
         resultatLabel = new JLabel();
         proposerButton = new JButton("Proposer");
         rejouerButton = new JButton("Rejouer");
@@ -101,7 +102,7 @@ public class UIPenduJeu extends JFrame {
         for (int i = 0; i < motADeviner.getMot().length(); i++) {
             penduVide += "__ ";
         }
-        penduLabel.setText("Pendu : " + penduVide);
+        penduLabel.setText(penduVide);
         lettresProposees.setText("");
     }
 
@@ -110,7 +111,7 @@ public class UIPenduJeu extends JFrame {
     }
 
     public void setPenduRempli(String penduRempli) {
-        penduLabel.setText("Pendu : " + penduRempli);
+        penduLabel.setText(penduRempli);
     }
 
     public void afficherMessage(String message) {
