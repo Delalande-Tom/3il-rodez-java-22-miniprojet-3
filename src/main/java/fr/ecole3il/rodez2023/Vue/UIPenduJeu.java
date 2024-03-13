@@ -13,6 +13,8 @@ public class UIPenduJeu extends JFrame {
     private JTextField propositionLettre;
     private JButton proposerButton;
     private JButton rejouerButton;
+
+    private JButton accueilButton;
     private JLabel lettresProposeesLabel;
     private JLabel lettresProposees;
     private JPanel panelLettresProposees;
@@ -23,6 +25,8 @@ public class UIPenduJeu extends JFrame {
     private JLabel tentatives;
 
     private JLabel penduImage;
+
+    private JPanel panelBoutton;
 
     private PenduController controller;
 
@@ -56,7 +60,12 @@ public class UIPenduJeu extends JFrame {
         penduLabel = new JLabel("");
         penduLabel.setHorizontalAlignment(SwingConstants.CENTER);
         resultatLabel = new JLabel();
+        //Construction panel Boutton
+        panelBoutton = new JPanel();
         proposerButton = new JButton("Proposer");
+        accueilButton = new JButton("Accueil");
+        panelBoutton.add(proposerButton);
+        panelBoutton.add(accueilButton);
         rejouerButton = new JButton("Rejouer");
 
         add(definitionLabel);
@@ -66,7 +75,7 @@ public class UIPenduJeu extends JFrame {
         add(penduLabel);
         add(panelTentative);
         add(resultatLabel);
-        add(proposerButton);
+        add(panelBoutton);
 
         proposerButton.addActionListener(new ActionListener() {
             @Override
@@ -82,16 +91,32 @@ public class UIPenduJeu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 controller.initialiserPartie();
                 controller.recommencerPartie();
-                remove(rejouerButton);
-                add(proposerButton);
+                afficherBouttonProposer();
                 resultatLabel.setText("");
-                lettresProposeesLabel.setText("Lettres déjà proposées : ");
-                tentatives.setText("10");
+                tentatives.setText(String.valueOf(controller.getTentatives()));
 
             }
         });
 
+        accueilButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UiMain.getInstance().setVisible(true);
+                dispose();
+            }
+        });
+
         setVisible(true);
+    }
+
+    /**
+     * Afficher le bouton proposer et cacher le bouton rejouer
+     */
+    private void afficherBouttonProposer() {
+        panelBoutton.remove(rejouerButton);
+        rejouerButton.setVisible(false);
+        panelBoutton.add(proposerButton,0);
+        proposerButton.setVisible(true);
     }
 
     /**
@@ -140,9 +165,18 @@ public class UIPenduJeu extends JFrame {
      */
     public void gagner(String motADeviner) {
         this.afficherMessage("Félicitations, vous avez trouvé le mot : " + motADeviner);
-        remove(proposerButton);
-        add(rejouerButton);
+        afficherBoutonRejouer();
 
+    }
+
+    /**
+     * Afficher le bouton rejouer et cacher le bouton proposer
+     */
+    private void afficherBoutonRejouer() {
+        proposerButton.setVisible(false);
+        panelBoutton.remove(proposerButton);
+        rejouerButton.setVisible(true);
+        panelBoutton.add(rejouerButton,0);
     }
 
     /**
@@ -151,8 +185,7 @@ public class UIPenduJeu extends JFrame {
      */
     public void perdre(String motADeviner) {
         this.afficherMessage("Désolé, vous avez perdu. Le mot à deviner était : " + motADeviner);
-        remove(proposerButton);
-        add(rejouerButton);
+        afficherBoutonRejouer();
     }
 
     /**
