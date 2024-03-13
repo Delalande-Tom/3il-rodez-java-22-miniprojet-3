@@ -38,7 +38,7 @@ public class UiMain extends JFrame{
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedDifficulty = difficultyComboBox.getSelectedIndex() + 1;
+                int selectedDifficulty = difficultyComboBox.getSelectedIndex();
                 dispose(); // Fermer cette interface
                 launchGame(selectedDifficulty); // Lancer l'autre interface avec la difficulté sélectionnée
             }
