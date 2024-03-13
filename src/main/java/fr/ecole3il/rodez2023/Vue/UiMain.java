@@ -10,8 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UiMain extends JFrame{
-    private JButton startButton;
-    private JComboBox<String> difficultyComboBox;
+    private final JComboBox<String> difficultyComboBox;
 
     private static UiMain instance;
 
@@ -34,7 +33,7 @@ public class UiMain extends JFrame{
         add(difficultyComboBox);
 
         // Bouton pour lancer l'autre interface
-        startButton = new JButton("Commencer le jeu");
+        JButton startButton = new JButton("Commencer le jeu");
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

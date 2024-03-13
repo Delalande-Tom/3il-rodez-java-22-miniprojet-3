@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestionMotsFichier implements GestionMotsInterface {
-    private String fichierMots;
+    private final String fichierMots;
 
     /**
      * Constructeur

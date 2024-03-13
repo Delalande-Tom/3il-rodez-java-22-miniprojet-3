@@ -9,26 +9,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UIPenduJeu extends JFrame {
-    private JLabel definitionLabel;
-    private JTextField propositionLettre;
-    private JButton proposerButton;
-    private JButton rejouerButton;
+    private final JLabel definitionLabel;
+    private final JTextField propositionLettre;
+    private final JButton proposerButton;
+    private final JButton rejouerButton;
+    private final JLabel lettresProposees;
+    private final JLabel penduLabel;
+    private final JLabel resultatLabel;
 
-    private JButton accueilButton;
-    private JLabel lettresProposeesLabel;
-    private JLabel lettresProposees;
-    private JPanel panelLettresProposees;
-    private JLabel penduLabel;
-    private JLabel resultatLabel;
-    private JLabel tentativesLabel;
+    private final JLabel tentatives;
 
-    private JLabel tentatives;
+    private final JLabel penduImage;
 
-    private JLabel penduImage;
+    private final JPanel panelBoutton;
 
-    private JPanel panelBoutton;
-
-    private PenduController controller;
+    private final PenduController controller;
 
     public UIPenduJeu(PenduController controller) {
         this.controller = controller;
@@ -42,7 +37,7 @@ public class UIPenduJeu extends JFrame {
         penduImage.setHorizontalAlignment(SwingConstants.CENTER);
         //Construction des tentatives
         JPanel panelTentative = new JPanel();
-        tentativesLabel = new JLabel("Nombre de tentatives restantes :");
+        JLabel tentativesLabel = new JLabel("Nombre de tentatives restantes :");
         tentatives = new JLabel(String.valueOf(controller.getTentatives()));
         panelTentative.add(tentativesLabel);
         panelTentative.add(tentatives);
@@ -51,8 +46,8 @@ public class UIPenduJeu extends JFrame {
         propositionLettre.setDocument(new LimitJTextField(1));
         propositionLettre.setHorizontalAlignment(SwingConstants.CENTER);
         // Construction des lettres déja proposé
-        panelLettresProposees = new JPanel();
-        lettresProposeesLabel = new JLabel("Lettres déjà proposées : ");
+        JPanel panelLettresProposees = new JPanel();
+        JLabel lettresProposeesLabel = new JLabel("Lettres déjà proposées : ");
         lettresProposees = new JLabel();
         panelLettresProposees.add(lettresProposeesLabel);
         panelLettresProposees.add(lettresProposees);
@@ -63,7 +58,7 @@ public class UIPenduJeu extends JFrame {
         //Construction panel Boutton
         panelBoutton = new JPanel();
         proposerButton = new JButton("Proposer");
-        accueilButton = new JButton("Accueil");
+        JButton accueilButton = new JButton("Accueil");
         panelBoutton.add(proposerButton);
         panelBoutton.add(accueilButton);
         rejouerButton = new JButton("Rejouer");

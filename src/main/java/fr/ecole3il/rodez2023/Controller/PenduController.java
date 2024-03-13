@@ -9,14 +9,14 @@ import java.util.Locale;
 import java.util.Random;
 
 public class PenduController {
-    private GestionMotsInterface gestionMots;
+    private final GestionMotsInterface gestionMots;
     private UIPenduJeu uiPenduJeu;
     private Mot motADeviner;
     private String lettresProposees;
 
     private int tentatives;
 
-    private int difficulty;
+    private final int difficulty;
 
     public PenduController(GestionMotsInterface gestionMots, int difficulty) {
         this.difficulty = difficulty;
